@@ -4,24 +4,33 @@ class NoteController {
     this.service = service;
   }
 
-  addNote = (req, res) => {
+  addNote = async (req, res) => {
     const content = req.body.msg;
+    const user = req.body.user;
     if (!content) {
       res.status(400).send("缺少c");
       return;
     }
-    const index = this.service.saveNotes(content);
+
+    await this.service.saveNotes({
+      content,
+      user,
+    });
     res.status(200).json({
-      msg: "成功:" + index,
+      msg: "成功",
     });
   };
 
-  getNote = (req, res) => {
-    const id = req.params.id;
+  getNote = async (req, res) => {
+    const author = req.query.author;
+    const content = await this.service.getNotes({
+      author,
+    });
+
     res.status(200).json({
-      msg: this.service.get(id),
+      msg: content,
     });
   };
 }
 
-export default NoteController;
+module.exports = NoteController;

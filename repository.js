@@ -1,19 +1,24 @@
 //資料層，負責拿資料/存資料
+const knex = require("./db");
 class Repository {
   notes = {};
   index = 0;
 
-  saveNotes = (note) => {
-    const currentId = this.index;
-    this.notes[currentId] = note;
-    this.index++;
-
-    return currentId;
+  saveNotes = async ({ content, user }) => {
+    await knex("notes").insert([
+      {
+        author: user,
+        content,
+      },
+    ]);
+    const result = await knex("notes").select("*").orderBy("id");
+    console.table(result);
   };
 
-  get = (id) => {
-    return this.notes[id];
+  getNotes = async ({ author }) => {
+    const result = await knex("notes").select("*").where("author", author);
+    return result;
   };
 }
 
-export default Repository;
+module.exports = Repository;

@@ -1,6 +1,7 @@
-import express from "express";
-import log from "./log.js";
-import router from "./router.js";
+const express = require("express");
+const log = require("./log.js");
+const router = require("./router.js");
+
 const app = express();
 
 app.use(log);

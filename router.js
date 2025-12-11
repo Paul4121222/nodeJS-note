@@ -1,11 +1,12 @@
-import { Router } from "express";
-import NoteController from "./controller.js";
-import Repository from "./repository.js";
+const { Router } = require("express");
+const NoteController = require("./controller.js");
+const Repository = require("./repository.js");
+
 const repository = new Repository();
 const controller = new NoteController(repository);
 const router = Router();
 
-router.get("/:id", controller.getNote);
+router.get("/", controller.getNote);
 router.post("/", controller.addNote);
 
-export default router;
+module.exports = router;
