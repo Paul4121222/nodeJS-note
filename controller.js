@@ -5,16 +5,12 @@ class NoteController {
   }
 
   addNote = async (req, res) => {
-    const content = req.body.msg;
-    const user = req.body.user;
-    if (!content) {
-      res.status(400).send("缺少c");
-      return;
-    }
+    const content = req.body.content;
+    const author = req.body.author;
 
     await this.service.saveNotes({
       content,
-      user,
+      author,
     });
     res.status(200).json({
       msg: "成功",

@@ -1,5 +1,5 @@
 const express = require("express");
-const log = require("./log.js");
+const log = require("./middlewares/log.js");
 const router = require("./router.js");
 
 const app = express();
@@ -11,7 +11,7 @@ app.use("/notes", router);
 //通用404
 app.use((req, res) => {
   res.status(404).json({
-    msg: "NOT FOUND.",
+    msg: "NOT FOUND this router.",
   });
 });
 

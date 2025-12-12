@@ -4,10 +4,10 @@ class Repository {
   notes = {};
   index = 0;
 
-  saveNotes = async ({ content, user }) => {
+  saveNotes = async ({ content, author }) => {
     await knex("notes").insert([
       {
-        author: user,
+        author,
         content,
       },
     ]);
