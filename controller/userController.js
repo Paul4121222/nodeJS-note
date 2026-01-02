@@ -45,6 +45,30 @@ class userController {
       },
     });
   };
+
+  login = async (req, res, next) => {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return next(new AppError("請提供帳密"), 400);
+    }
+
+    const existUser = await this.service.findUserByName(username);
+
+    if (!existUser) {
+      return next(new AppError("帳號錯誤", 400));
+    }
+
+    const isMatch = await bcrypt.compare(password, existUser.password);
+    if (!isMatch) {
+      return next(new AppError("密碼錯誤", 400));
+    }
+
+    const token = this.signToken({ userId: existUser.id });
+
+    res.status(200).json({
+      token,
+    });
+  };
 }
 
 module.exports = userController;

@@ -16,6 +16,7 @@ app.use(express.json());
 
 //公開路由
 app.post("/register", new userController(new userRepository()).register);
+app.post("/login", new userController(new userRepository()).login);
 
 app.use("/notes", protectMiddle, router);
 
