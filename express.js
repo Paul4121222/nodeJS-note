@@ -4,11 +4,20 @@ const router = require("./router.js");
 const globalError = require("./middlewares/error.js");
 const AppError = require("./utils/AppError.js");
 
+const userRepository = require("./repository/userResponsitory.js");
+const userController = require("./controller/userController.js");
+
+const protectMiddle = require("./middlewares/protect.js");
+
 const app = express();
 
 app.use(log);
 app.use(express.json());
-app.use("/notes", router);
+
+//公開路由
+app.post("/register", new userController(new userRepository()).register);
+
+app.use("/notes", protectMiddle, router);
 
 //通用404
 app.use((req, res, next) => {

@@ -6,11 +6,13 @@ class NoteController {
 
   addNote = async (req, res) => {
     const content = req.body.content;
-    const author = req.body.author;
+    const username = req.user.username;
+    const userId = req.user.id;
 
     await this.service.saveNotes({
       content,
-      author,
+      username,
+      userId,
     });
     res.status(200).json({
       msg: "成功",
@@ -18,9 +20,9 @@ class NoteController {
   };
 
   getNote = async (req, res) => {
-    const author = req.query.author;
+    const id = req.user.id;
     const content = await this.service.getNotes({
-      author,
+      id,
     });
 
     res.status(200).json({

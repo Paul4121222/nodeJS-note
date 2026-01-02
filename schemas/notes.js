@@ -5,9 +5,9 @@ const { z } = require("zod");
 
 const createNotesSchema = z.object({
   body: z.object({
-    author: z.string().min(1, {
-      message: "須至少一個字",
-    }),
+    // author: z.string().min(1, {
+    //   message: "須至少一個字",
+    // }),
     content: z.string(),
   }),
 });
