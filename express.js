@@ -1,4 +1,6 @@
 const express = require("express");
+const swaggerDocs = require("./swagger.js");
+const swaggerUi = require("swagger-ui-express");
 const log = require("./middlewares/log.js");
 const router = require("./router.js");
 const globalError = require("./middlewares/error.js");
@@ -20,6 +22,7 @@ app.post("/login", new userController(userRepository).login);
 
 app.use("/notes", protectMiddle, router);
 
+app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 //通用404
 app.use((req, res, next) => {
   next(new AppError(`找不到路徑: ${req.originalUrl}`, 404));
